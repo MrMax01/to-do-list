@@ -11,7 +11,8 @@ function list(){
         const todoL = todoList[i];
         const name = todoL.name;
         const dueDate = todoL.dueDate;
-        const html = '<div>'+ name + '</div>' + '<div>' + dueDate + '</div><button class="delete-button" onclick="todoList.splice('+i+', 1); list(); deleteTodo('+i+'); ">Delete</button>'
+        const time = todoL.time;
+        const html = '<div>'+ name + '</div><div>' + dueDate + '</div><div>'+time+'</div><button class="delete-button" onclick="todoList.splice('+i+', 1); list(); deleteTodo('+i+'); ">Delete</button>'
         todoListHTML += html;
     }
 
@@ -21,11 +22,13 @@ function list(){
 function addTodo(){
     const todo = document.querySelector('.inputText');
     const dateInputElement = document.querySelector('.js-due-date-input');
+    const timeElement = document.querySelector('.js-time-input');
     if(todo.value && dateInputElement.value){
 
         todoList.push({
             name: todo.value,
             dueDate: dateInputElement.value,
+            time: timeElement.value,
         });
         localStorage.setItem('todoList', JSON.stringify(todoList));
         list();
@@ -45,5 +48,11 @@ function deleteTodo(i){
 
         // Aggiorna la visualizzazione dell'elenco
         list();
+    }
+}
+
+function hundleEnter(event){
+    if(event.key === "Enter"){
+        addTodo();
     }
 }
